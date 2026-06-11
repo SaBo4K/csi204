@@ -1,0 +1,17 @@
+*{
+    font-family: sans-serif;
+    font-size: large;
+    color: darkslateblue;
+}
+header{
+    font: bolder;
+    text-align: center;
+    background-color: darkslateblue;
+    padding: 10px;
+    margin: 10px;
+}
+div{
+    background-color: aliceblue;
+    margin: 10px;
+    padding: 10px;
+}
