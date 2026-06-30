@@ -6,36 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
     <style>
-        /* CSS ตกแต่งเมนูเพิ่มเติมให้ดูน่ากด */
-        .lab-menu {
-            list-style-type: none;
-            padding: 0;
-            max-width: 600px;
-        }
-        .lab-menu li {
-            margin-bottom: 10px;
-        }
-        .lab-menu a {
-            display: block;
-            padding: 12px 20px;
-            background-color: #0f4c5f;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-family: 'Sarabun', sans-serif;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .lab-menu a:hover {
-            background-color: #0b3745;
-            transform: translateX(5px);
-        }
-        .boss-stage a {
-            background-color: #e74c3c; /* สีแดงเด่นๆ สำหรับโบนัสโปรเจกต์ */
-        }
-        .boss-stage a:hover {
-            background-color: #c0392b;
-        }
+        .lab-menu { list-style-type: none; padding: 0; max-width: 600px; }
+        .lab-menu li { margin-bottom: 10px; }
+        .lab-menu a { display: block; padding: 12px 20px; background-color: #0f4c5f; color: white; text-decoration: none; border-radius: 8px; font-family: 'Sarabun', sans-serif; font-weight: bold; transition: background 0.3s; }
+        .lab-menu a:hover { background-color: #0b3745; transform: translateX(5px); }
+        .workshop-container { margin-bottom: 30px; }
+        /* ปรับขนาด Embed ให้เล็กลง */
+        .canva-embed { width: 400px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -45,48 +22,62 @@
     
     <div style="padding: 20px;">
         
-        <p>
-            <mark style="background-color: orange; padding: 5px;">Workshop #1</mark>
-            Create account GitHub & Using Git with Visual Studio Code
-        </p>
-        <p>Download Git Program:
-            <a style="color: darkred;" href="https://git-scm.com" target="_blank">
-                git-scm.com
-            </a>
-        </p>
-        <p>Register Account GitHub:
-            <a style="color: darkred;" href="http://github.com" target="_blank">
-                github.com
-            </a>    
-        </p>
-
+        <!-- Workshop 1 (นำกลับมาแล้ว) -->
+        <p><mark style="background-color: orange; padding: 5px;">Workshop #1</mark> Create account GitHub & Using Git with Visual Studio Code</p>
+        <p>Download Git Program: <a style="color: darkred;" href="https://git-scm.com" target="_blank">git-scm.com</a></p>
+        <p>Register Account GitHub: <a style="color: darkred;" href="http://github.com" target="_blank">github.com</a></p>
         <hr style="margin: 30px 0; border: 1px solid #eee;">
 
-        <h2>Workshop#5</h2>
-        <p style="color: #666;">คลิกที่เมนูด้านล่างเพื่อดูผลงานแต่ละชิ้น</p>
-        
-        <ul class="lab-menu">
-            <li><a href="Workshop/w5/lab1.html">Lab 1 - JavaScript Data Types</a></li>
-            <li><a href="Workshop/w5/lab1_2.html">Lab 1.2 - Pseudocode</a></li>
-            <li><a href="Workshop/w5/lab1_3.html">Lab 1.3 - Landing Page</a></li>
-            <li><a href="Workshop/w5/lab1_4.html">Lab 1.4 - Form Validation (สมัครสมาชิก)</a></li>
-            <li><a href="Workshop/w5/lab1_5.html">Lab 1.5 - LocalStorage (บันทึกข้อมูล)</a></li>
-            <li><a href="Workshop/w5/lab3_1.html">Lab 3.1 - สินเชื่อบ้าน (Home Loan)</a></li>
-            <li><a href="Workshop/w5/lab3_2.html">Lab 3.2 - ค่างวดรถยนต์ (Car Installment)</a></li>
-            <li><a href="Workshop/w5/lab3_3.html">Lab 3.3 - ค่าไฟฟ้า (Electricity Bill)</a></li>
-            <li><a href="Workshop/w5/lab4_1a.html">Lab 4.1 - ข้อมูลส่วนตัว (LocalStorage & Theme)</a></li>
-            <li><a href="Workshop/w5/lab4_2a.html">Lab 4.2 - ตะกร้าสินค้า (SessionStorage)</a></li>
-            <li><a href="Workshop/w5/lab5_1.html">Lab 5.1 - ระบบคำนวณราคาสินค้าและส่วนลด</a></li>
-            <li><a href="Workshop/w5/lab5_2.html">Lab 5.2 - ระบบคำนวณค่าส่งสินค้า</a></li>
-            <li><a href="Workshop/w5/lab6_1.html">Lab 6.1 - ระบบแปลงหน่วย (Switch-Case)</a></li>
-            <li><a href="Workshop/w5/lab6_2.html">Lab 6.2 - กรองหมวดหมู่สินค้า (Filter)</a></li>
-            <li><a href="Workshop/w5/lab7_1.html">Lab 7.1 - ระบบจัดการข้อมูลนักเรียน</a></li>
-            <li><a href="Workshop/w5/lab7_2.html">Lab 7.2 - ระบบ Import/Export ข้อมูล (JSON)</a></li>
-            <li><a href="Workshop/w5/lab8_1.html">Lab 8.1 - ตารางผ่อนชำระด้วย For Loop</a></li>
-            <li><a href="Workshop/w5/lab8_2.html">Lab 8.2 - ภาษี ส่วนลด และการทำงานของ Loop ทั้ง 3 ชนิด</a></li>
-            <li class="boss-stage"><a href="Workshop/w5/house_loan_calculator.html">Lab 9 - ระบบคำนวณสินเชื่อบ้าน</a></li>
-        </ul>
+        <!-- Workshop 2, 3, 4 (ปรับขนาดให้เล็กลง) -->
+        <div class="workshop-container">
+            <h3>Workshop #2</h3>
+            <div class="canva-embed" style="position: relative; height: 300px; overflow: hidden; border-radius: 8px;">
+                <iframe style="width: 100%; height: 100%; border: none;" src="https://www.canva.com/design/DAHM6Agkyi0/uOA35L4YBRxN8kOD9G57Tg/view?embed" allowfullscreen></iframe>
+            </div>
+            <a href="https://www.canva.com/design/DAHM6Agkyi0/uOA35L4YBRxN8kOD9G57Tg/view" target="_blank" style="font-size: 14px;">View W2</a>
+        </div>
 
+        <div class="workshop-container">
+            <h3>Workshop #3</h3>
+            <div class="canva-embed" style="position: relative; height: 300px; overflow: hidden; border-radius: 8px;">
+                <iframe style="width: 100%; height: 100%; border: none;" src="https://www.canva.com/design/DAHNUBfVO2w/ycHE-Zs7e9jjPOI7qW6pUA/view?embed" allowfullscreen></iframe>
+            </div>
+            <a href="https://www.canva.com/design/DAHNUBfVO2w/ycHE-Zs7e9jjPOI7qW6pUA/view" target="_blank" style="font-size: 14px;">View W3</a>
+        </div>
+
+        <div class="workshop-container">
+            <h3>Workshop #4</h3>
+            <div class="canva-embed" style="position: relative; height: 300px; overflow: hidden; border-radius: 8px;">
+                <iframe style="width: 100%; height: 100%; border: none;" src="https://www.canva.com/design/DAHNdaB-Jic/V1krdRfnrka-2xsejfvUwA/view?embed" allowfullscreen></iframe>
+            </div>
+            <a href="https://www.canva.com/design/DAHNdaB-Jic/V1krdRfnrka-2xsejfvUwA/view" target="_blank" style="font-size: 14px;">View W4</a>
+        </div>
+
+        <!-- Workshop 5 (Labs) -->
+        <div class="workshop-container">
+            <h2>Workshop #5</h2>
+            <ul class="lab-menu">
+                <li><a href="Workshop/w5/lab1.html">Lab 1 - JavaScript Data Types</a></li>
+                <li><a href="Workshop/w5/lab1_2.html">Lab 1.2 - Pseudocode</a></li>
+                <li><a href="Workshop/w5/lab1_3.html">Lab 1.3 - Landing Page</a></li>
+                <li><a href="Workshop/w5/lab1_4.html">Lab 1.4 - Form Validation (สมัครสมาชิก)</a></li>
+                <li><a href="Workshop/w5/lab1_5.html">Lab 1.5 - LocalStorage (บันทึกข้อมูล)</a></li>
+                <li><a href="Workshop/w5/lab3_1.html">Lab 3.1 - สินเชื่อบ้าน (Home Loan)</a></li>
+                <li><a href="Workshop/w5/lab3_2.html">Lab 3.2 - ค่างวดรถยนต์ (Car Installment)</a></li>
+                <li><a href="Workshop/w5/lab3_3.html">Lab 3.3 - ค่าไฟฟ้า (Electricity Bill)</a></li>
+                <li><a href="Workshop/w5/lab4_1a.html">Lab 4.1 - ข้อมูลส่วนตัว (LocalStorage & Theme)</a></li>
+                <li><a href="Workshop/w5/lab4_2a.html">Lab 4.2 - ตะกร้าสินค้า (SessionStorage)</a></li>
+                <li><a href="Workshop/w5/lab5_1.html">Lab 5.1 - ระบบคำนวณราคาสินค้าและส่วนลด</a></li>
+                <li><a href="Workshop/w5/lab5_2.html">Lab 5.2 - ระบบคำนวณค่าส่งสินค้า</a></li>
+                <li><a href="Workshop/w5/lab6_1.html">Lab 6.1 - ระบบแปลงหน่วย (Switch-Case)</a></li>
+                <li><a href="Workshop/w5/lab6_2.html">Lab 6.2 - กรองหมวดหมู่สินค้า (Filter)</a></li>
+                <li><a href="Workshop/w5/lab7_1.html">Lab 7.1 - ระบบจัดการข้อมูลนักเรียน</a></li>
+                <li><a href="Workshop/w5/lab7_2.html">Lab 7.2 - ระบบ Import/Export ข้อมูล (JSON)</a></li>
+                <li><a href="Workshop/w5/lab8_1.html">Lab 8.1 - ตารางผ่อนชำระด้วย For Loop</a></li>
+                <li><a href="Workshop/w5/lab8_2.html">Lab 8.2 - ภาษี ส่วนลด และการทำงานของ Loop ทั้ง 3 ชนิด</a></li>
+                <li><a href="Workshop/w5/house_loan_calculator.html">Lab 9 - ระบบคำนวณสินเชื่อบ้านลดต้นลดดอก</a></li>
+            </ul>
+        </div>
     </div>
 
     <footer style="background-color: oldlace; padding: 10px; margin: 10px;">
