@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3.3 - ระบบคำนวณค่าไฟฟ้า (อัตราก้าวหน้า)</title>
+    <style>
+        body {
+            font-family: 'Sarabun', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        header {
+            background: #0f4c5f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            color: #0f4c5f;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #f4f7f6;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #0f4c5f;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0f4c5f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0b3745;
+        }
+        #result {
+            background-color: #fcfcfc;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lab 3.3 - Electricity Bill Calculator</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>บันทึกหน่วยการใช้ไฟฟ้า</h2>
+            
+            <div class="form-group">
+                <label for="prevUnit">เลขจดมิเตอร์ครั้งก่อน (หน่วย)</label>
+                <input type="number" id="prevUnit" placeholder="เช่น 1200" min="0">
+            </div>
+            
+            <div class="form-group">
+                <label for="currentUnit">เลขจดมิเตอร์ครั้งล่าสุด (หน่วย)</label>
+                <input type="number" id="currentUnit" placeholder="เช่น 1550" min="0">
+            </div>
+
+            <button onclick="calculateElectricity()">คำนวณค่าไฟฟ้า</button>
+
+            <div id="result">
+                <p style="color: #999; text-align: center;">กรอกเลขมิเตอร์แล้วกดปุ่มคำนวณ</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="demo-3.2.js"></script>
+</body>
+</html>

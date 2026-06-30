@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4.2a - เลือกสินค้า (SessionStorage)</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 40px; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .product-list { margin-bottom: 20px; }
+        .product-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px dashed #ccc; align-items: center; }
+        .product-item label { cursor: pointer; flex-grow: 1; margin-left: 10px; font-size: 16px; }
+        button { width: 100%; padding: 12px; background: #0f4c5f; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0b3745; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🛍️ แคตตาล็อกสินค้า</h2>
+        <p style="text-align: center; color: #777;">เลือกสินค้าที่ต้องการหยิบใส่ตะกร้า</p>
+        
+        <div class="product-list" id="productForm">
+            <div class="product-item">
+                <input type="checkbox" id="item1" class="cart-item" value="350" data-name="เสื้อยืด คอกลม">
+                <label for="item1">เสื้อยืด คอกลม</label>
+                <span>350 ฿</span>
+            </div>
+            <div class="product-item">
+                <input type="checkbox" id="item2" class="cart-item" value="890" data-name="กางเกงยีนส์ ทรงกระบอก">
+                <label for="item2">กางเกงยีนส์ ทรงกระบอก</label>
+                <span>890 ฿</span>
+            </div>
+            <div class="product-item">
+                <input type="checkbox" id="item3" class="cart-item" value="1500" data-name="รองเท้าผ้าใบ">
+                <label for="item3">รองเท้าผ้าใบ</label>
+                <span>1,500 ฿</span>
+            </div>
+            <div class="product-item">
+                <input type="checkbox" id="item4" class="cart-item" value="299" data-name="หมวกแก๊ป">
+                <label for="item4">หมวกแก๊ป</label>
+                <span>299 ฿</span>
+            </div>
+        </div>
+
+        <button onclick="saveToSession()">หยิบใส่ตะกร้าและไปชำระเงิน</button>
+    </div>
+
+    <script>
+        function saveToSession() {
+            // 1. ค้นหา Checkbox ทั้งหมดที่มีคลาส .cart-item
+            let checkboxes = document.querySelectorAll('.cart-item');
+            let selectedProducts = [];
+
+            // 2. วนลูปดูว่าอันไหนถูกติ๊ก (checked) บ้าง
+            checkboxes.forEach((box) => {
+                if (box.checked) {
+                    // ถ้าถูกติ๊ก ให้เอาชื่อและราคา ยัดลง Array
+                    selectedProducts.push({
+                        name: box.getAttribute('data-name'),
+                        price: parseFloat(box.value)
+                    });
+                }
+            });
+
+            // ตรวจสอบว่าเลือกสินค้าหรือยัง
+            if (selectedProducts.length === 0) {
+                alert("กรุณาเลือกสินค้าอย่างน้อย 1 ชิ้น!");
+                return;
+            }
+
+            // 3. แปลง Array เป็นข้อความ JSON แล้วบันทึกลง sessionStorage
+            sessionStorage.setItem("myCart", JSON.stringify(selectedProducts));
+
+            // 4. กระโดดไปหน้าตะกร้าสินค้า
+            window.location.href = "lab4_2b.html";
+        }
+    </script>
+</body>
+</html>

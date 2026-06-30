@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 6.2 - กรองหมวดหมู่สินค้า (Filter)</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 30px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        .filter-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #e8f4f8; padding: 15px; border-radius: 5px; }
+        select { padding: 8px; font-size: 15px; border-radius: 5px; border: 1px solid #ccc; outline: none; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 500px) { .product-grid { grid-template-columns: 1fr; } }
+        .product-card { border: 1px solid #eee; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; }
+        .product-name { font-weight: bold; font-size: 16px; color: #0f4c5f; margin-bottom: 5px; }
+        .product-category { font-size: 12px; color: white; background: #95a5a6; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
+        .product-price { color: #e74c3c; font-weight: bold; font-size: 16px; }
+        .product-stock { font-size: 13px; color: #7f8c8d; margin-top: 5px; }
+        .empty-state { text-align: center; color: #999; grid-column: span 2; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🏷️ แคตตาล็อกสินค้า (Filter & Render)</h2>
+        
+        <div class="filter-section">
+            <label style="font-weight: bold;">กรองตามหมวดหมู่:</label>
+            <select id="categoryFilter" onchange="filterProducts()">
+                <option value="ทั้งหมด">แสดงทั้งหมด</option>
+                <option value="เสื้อผ้า">เสื้อผ้า</option>
+                <option value="อุปกรณ์">อุปกรณ์ไอที</option>
+                <option value="อาหาร">อาหารและเครื่องดื่ม</option>
+            </select>
+        </div>
+
+        <div class="product-grid" id="productContainer"></div>
+    </div>
+
+    <script>
+        // 1. สร้างฐานข้อมูลจำลองด้วย Array ของ Object
+        const products = [
+            { id: 1, name: "เสื้อยืดคอกลม", category: "เสื้อผ้า", price: 199, stock: 50 },
+            { id: 2, name: "กางเกงยีนส์", category: "เสื้อผ้า", price: 890, stock: 20 },
+            { id: 3, name: "เมาส์ไร้สาย", category: "อุปกรณ์", price: 450, stock: 15 },
+            { id: 4, name: "คีย์บอร์ด Mechanical", category: "อุปกรณ์", price: 1200, stock: 5 },
+            { id: 5, name: "กาแฟกระป๋อง", category: "อาหาร", price: 25, stock: 100 },
+            { id: 6, name: "ขนมปังโฮลวีต", category: "อาหาร", price: 45, stock: 30 }
+        ];
+
+        // 2. ฟังก์ชันสำหรับเรนเดอร์ (วาด) สินค้าลงบนหน้าจอ
+        function renderProducts(itemsToRender) {
+            let container = document.getElementById("productContainer");
+            let html = "";
+
+            if (itemsToRender.length === 0) {
+                container.innerHTML = `<div class="empty-state">ไม่พบสินค้าในหมวดหมู่นี้</div>`;
+                return;
+            }
+
+            // ใช้ .forEach() วนลูปวาดกล่องสินค้าทีละชิ้น
+            itemsToRender.forEach(item => {
+                html += `
+                    <div class="product-card">
+                        <div class="product-name">${item.name}</div>
+                        <div class="product-category">${item.category}</div>
+                        <div class="product-price">฿${item.price.toLocaleString()}</div>
+                        <div class="product-stock">คงเหลือ: ${item.stock} ชิ้น</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // 3. ฟังก์ชันกรองสินค้าตาม Dropdown
+        function filterProducts() {
+            let selectedCategory = document.getElementById("categoryFilter").value;
+            
+            // ⚡ ตรรกะการคัดกรอง
+            if (selectedCategory === "ทั้งหมด") {
+                // ถ้าเลือก "ทั้งหมด" ให้ส่งข้อมูลชุดออริจินัลไปเรนเดอร์เลย
+                renderProducts(products);
+            } else {
+                // ถ้าเลือกหมวดอื่น ให้ใช้ .filter() กรองเอาเฉพาะชิ้นที่ตรงเงื่อนไข
+                let filteredItems = products.filter(function(product) {
+                    return product.category === selectedCategory;
+                });
+                
+                // เอาข้อมูลที่กรองแล้ว (เหลือแค่บางชิ้น) ไปเรนเดอร์
+                renderProducts(filteredItems);
+            }
+        }
+
+        // 4. สั่งให้ทำงานครั้งแรกตอนเปิดหน้าเว็บ (แสดงทั้งหมด)
+        window.onload = function() {
+            renderProducts(products);
+        };
+    </script>
+</body>
+</html>

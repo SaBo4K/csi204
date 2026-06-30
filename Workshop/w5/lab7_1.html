@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 7.1 - ระบบจัดการข้อมูลนักเรียน</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 30px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 700px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #0f4c5f; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .summary-box { display: flex; gap: 15px; margin-top: 20px; }
+        .box { flex: 1; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; }
+        .bg-blue { background-color: #e8f4f8; color: #0f4c5f; border: 1px solid #bce0ee; }
+        .bg-green { background-color: #e8f8f5; color: #117a65; border: 1px solid #a2d9ce; }
+        ul { text-align: left; margin: 10px 0 0 0; padding-left: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>📊 ระบบจัดการข้อมูลนักศึกษา (Array Methods)</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>รหัสนักศึกษา</th>
+                    <th>ชื่อ-นามสกุล</th>
+                    <th>คะแนนรวม</th>
+                    <th>เกรด</th>
+                </tr>
+            </thead>
+            <tbody id="studentTable">
+                </tbody>
+        </table>
+
+        <div class="summary-box">
+            <div class="box bg-blue">
+                📈 คะแนนเฉลี่ยของห้อง
+                <div id="avgScore" style="font-size: 24px; margin-top: 10px;">-</div>
+            </div>
+            <div class="box bg-green">
+                🏆 รายชื่อคนได้เกรด A
+                <ul id="gradeAList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. สร้าง Array Object จำลองฐานข้อมูลนักเรียน
+        const students = [
+            { id: "67107433", name: "Nutchapon Wongsajan", score: 92, grade: "A" },
+            { id: "67107434", name: "สมชาย ใจดี", score: 75, grade: "B" },
+            { id: "67107435", name: "สมหญิง รักเรียน", score: 88, grade: "A" },
+            { id: "67107436", name: "สายฟ้า พายุ", score: 55, grade: "D" },
+            { id: "67107437", name: "นภา แจ่มใส", score: 68, grade: "C" }
+        ];
+
+        window.onload = function() {
+            // 2. ใช้งาน .map() เพื่อสร้างแถวในตาราง
+            let tableHtml = students.map(std => {
+                return `<tr>
+                    <td>${std.id}</td>
+                    <td style="text-align: left;">${std.name}</td>
+                    <td>${std.score}</td>
+                    <td><strong style="color: ${std.grade === 'A' ? '#27ae60' : '#333'}">${std.grade}</strong></td>
+                </tr>`;
+            }).join(""); // .join("") เพื่อเชื่อม Array ให้กลายเป็นข้อความก้อนเดียว
+            document.getElementById("studentTable").innerHTML = tableHtml;
+
+            // 3. ใช้งาน .reduce() เพื่อหาคะแนนรวม แล้วนำไปหาค่าเฉลี่ย
+            let totalScore = students.reduce((sum, std) => sum + std.score, 0);
+            let avgScore = totalScore / students.length;
+            document.getElementById("avgScore").innerText = avgScore.toFixed(2) + " คะแนน";
+
+            // 4. ใช้งาน .filter() เพื่อกรองหาเฉพาะคนที่ได้เกรด A
+            let topStudents = students.filter(std => std.grade === "A");
+            
+            // ใช้ .map() อีกรอบเพื่อแปลงคนเกรด A เป็นลิสต์ <li>
+            let topStudentsHtml = topStudents.map(std => `<li>${std.name} (${std.score} คะแนน)</li>`).join("");
+            document.getElementById("gradeAList").innerHTML = topStudentsHtml;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1.2: Pseudocode</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        /* จัดรูปแบบกล่องข้อความ Pseudocode */
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ผลการทดลอง Lab 1.2: เขียน Pseudocode</h1>
+
+        <h2>Pseudocode คำนวณพื้นที่วงกลม</h2>
+        <pre><code>// Pseudocode: การคำนวณพื้นที่วงกลม
+BEGIN
+    INPUT radius
+    SET PI = 3.14159
+    SET area = PI * radius * radius
+    OUTPUT "Area of the circle is: " + area
+END</code></pre>
+
+        <h2>Pseudocode คำนวณเกรด (A/B/C/D/F)</h2>
+        <pre><code>// Pseudocode: การคำนวณเกรดจากคะแนน 0-100
+BEGIN
+    INPUT score
+    IF score >= 80 THEN
+        SET grade = "A"
+    ELSE IF score >= 70 THEN
+        SET grade = "B"
+    ELSE IF score >= 60 THEN
+        SET grade = "C"
+    ELSE IF score >= 50 THEN
+        SET grade = "D"
+    ELSE
+        SET grade = "F"
+    ENDIF
+    OUTPUT "Your grade is: " + grade
+END</code></pre>
+
+        <h2>Pseudocode หาค่าสูงสุดใน 3 จำนวน</h2>
+        <pre><code>// Pseudocode: การหาค่าสูงสุดจากตัวเลข 3 จำนวน
+BEGIN
+    INPUT num1, num2, num3
+    SET max_value = num1
+    
+    IF num2 > max_value THEN
+        SET max_value = num2
+    ENDIF
+    
+    IF num3 > max_value THEN
+        SET max_value = num3
+    ENDIF
+    
+    OUTPUT "The maximum value is: " + max_value
+END</code></pre>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 8.2 - ภาษี ส่วนลด และการทำงานของ Loop ทั้ง 3 ชนิด</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 20px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 900px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .loop-section { margin-bottom: 30px; border-left: 4px solid #0f4c5f; padding-left: 15px; }
+        h3 { color: #e67e22; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; text-align: right; }
+        th { background-color: #34495e; color: white; padding: 10px; text-align: center; }
+        td { padding: 8px 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .summary-card { background: #2c3e50; color: white; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: right; font-size: 16px; }
+        .summary-card p { margin: 5px 0; }
+        .total-highlight { font-size: 20px; color: #f1c40f; font-weight: bold; border-top: 1px dashed #7f8c8d; padding-top: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🧾 ระบบขายสินค้า (คำนวณส่วนลด & VAT 7%)</h2>
+        <p style="text-align: center; color: #7f8c8d;">สาธิตการดึงข้อมูลจาก Array ผ่านคำสั่ง For, While และ Do-While Loop</p>
+
+        <div class="loop-section">
+            <h3>1. ตารางจาก For Loop</h3>
+            <table>
+                <thead><tr><th>ชื่อสินค้า</th><th>ราคา/หน่วย</th><th>จำนวน</th><th>รวม (บาท)</th></tr></thead>
+                <tbody id="forLoopTable"></tbody>
+            </table>
+        </div>
+
+        <div class="loop-section">
+            <h3>2. ตารางจาก While Loop</h3>
+            <table>
+                <thead><tr><th>ชื่อสินค้า</th><th>ราคา/หน่วย</th><th>จำนวน</th><th>รวม (บาท)</th></tr></thead>
+                <tbody id="whileLoopTable"></tbody>
+            </table>
+        </div>
+
+        <div class="loop-section">
+            <h3>3. ตารางจาก Do-While Loop</h3>
+            <table>
+                <thead><tr><th>ชื่อสินค้า</th><th>ราคา/หน่วย</th><th>จำนวน</th><th>รวม (บาท)</th></tr></thead>
+                <tbody id="doWhileLoopTable"></tbody>
+            </table>
+        </div>
+
+        <div class="summary-card" id="summaryBox">
+            </div>
+    </div>
+
+    <script>
+        // 1. สร้าง Array สินค้าอย่างน้อย 5 รายการตามเงื่อนไข
+        const products = [
+            { name: "Keyboard Mechanical", price: 2500, qty: 2 },
+            { name: "Monitor 24 inch", price: 4500, qty: 1 },
+            { name: "Gaming Mouse", price: 1200, qty: 3 },
+            { name: "Bluetooth Speaker", price: 800, qty: 1 },
+            { name: "Wireless Headphones", price: 3200, qty: 1 }
+        ];
+
+        window.onload = function() {
+            // ==========================================
+            // 🔄 1. ใช้ For Loop สร้างตาราง
+            // ==========================================
+            let forHtml = "";
+            let totalPrice = 0; // ตัวแปรเก็บยอดรวมทั้งหมด
+            for (let i = 0; i < products.length; i++) {
+                let itemTotal = products[i].price * products[i].qty;
+                forHtml += `<tr>
+                    <td style="text-align: left;">${products[i].name}</td>
+                    <td>${products[i].price.toLocaleString()}</td>
+                    <td style="text-align: center;">${products[i].qty}</td>
+                    <td>${itemTotal.toLocaleString()}</td>
+                </tr>`;
+                totalPrice += itemTotal; // สะสมยอดทีละรอบ
+            }
+            document.getElementById("forLoopTable").innerHTML = forHtml;
+
+            // ==========================================
+            // 🔄 2. ใช้ While Loop สร้างตาราง
+            // ==========================================
+            let whileHtml = "";
+            let j = 0;
+            while (j < products.length) {
+                let itemTotal = products[j].price * products[j].qty;
+                whileHtml += `<tr>
+                    <td style="text-align: left;">${products[j].name}</td>
+                    <td>${products[j].price.toLocaleString()}</td>
+                    <td style="text-align: center;">${products[j].qty}</td>
+                    <td>${itemTotal.toLocaleString()}</td>
+                </tr>`;
+                j++;
+            }
+            document.getElementById("whileLoopTable").innerHTML = whileHtml;
+
+            // ==========================================
+            // 🔄 3. ใช้ Do-While Loop สร้างตาราง
+            // ==========================================
+            let doHtml = "";
+            let k = 0;
+            if (products.length > 0) {
+                do {
+                    let itemTotal = products[k].price * products[k].qty;
+                    doHtml += `<tr>
+                        <td style="text-align: left;">${products[k].name}</td>
+                        <td>${products[k].price.toLocaleString()}</td>
+                        <td style="text-align: center;">${products[k].qty}</td>
+                        <td>${itemTotal.toLocaleString()}</td>
+                    </tr>`;
+                    k++;
+                } while (k < products.length);
+            }
+            document.getElementById("doWhileLoopTable").innerHTML = doHtml;
+
+            // ==========================================
+            // 🧮 ส่วนคำนวณส่วนลดตามเงื่อนไข (Business Logic)
+            // ==========================================
+            let discountRate = 0;
+            if (totalPrice >= 10000) {
+                discountRate = 0.10; // ยอด >= 10,000 ลด 10%
+            } else if (totalPrice >= 5000) {
+                discountRate = 0.05; // ยอด >= 5,000 ลด 5%
+            }
+
+            let discountAmount = totalPrice * discountRate;
+            let priceAfterDiscount = totalPrice - discountAmount;
+            
+            // คำนวณ VAT 7% จากยอดหลังหักส่วนลด (ตรรกะบัญชีสากล)
+            let vatAmount = priceAfterDiscount * 0.07;
+            let netTotal = priceAfterDiscount + vatAmount;
+
+            // แสดงผลสรุปยอดลงกล่องสีดำ
+            document.getElementById("summaryBox").innerHTML = `
+                <p>ยอดรวมก่อนส่วนลด: <strong>${totalPrice.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</strong></p>
+                <p style="color: #e74c3c;">ส่วนลดโปรโมชั่น (${discountRate * 100}%): <strong>- ${discountAmount.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</strong></p>
+                <p>ภาษีมูลค่าเพิ่ม (VAT 7%): <strong>+ ${vatAmount.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</strong></p>
+                <p class="total-highlight">ยอดสุทธิที่ต้องชำระ (Net Total): ${netTotal.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</p>
+            `;
+        }
+    </script>
+</body>
+</html>

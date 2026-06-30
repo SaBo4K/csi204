@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5.2 - ระบบคำนวณค่าส่งสินค้า</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 30px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 450px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0f4c5f; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0b3745; }
+        #resultBox { margin-top: 20px; padding: 15px; background: #fafafa; border: 1px dashed #ccc; border-radius: 5px; font-size: 16px; }
+        .free-shipping { color: #27ae60; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🚚 คำนวณค่าจัดส่งสินค้า</h2>
+        <p style="text-align: center; color: #e74c3c; font-size: 14px; font-weight: bold;">🔥 โปรโมชั่น: ซื้อครบ 500 บาท ส่งฟรีทุกรายการ!</p>
+        
+        <div class="form-group">
+            <label>ยอดรวมราคาสินค้า (บาท):</label>
+            <input type="number" id="goodsPrice" placeholder="ระบุราคาสินค้า" min="0">
+        </div>
+
+        <div class="form-group">
+            <label>รูปแบบการจัดส่ง:</label>
+            <select id="shippingMethod">
+                <option value="50">EMS ด่วนพิเศษ (50 บาท)</option>
+                <option value="30">ลงทะเบียน (30 บาท)</option>
+                <option value="15">พัสดุธรรมดา (15 บาท)</option>
+            </select>
+        </div>
+
+        <button onclick="calculateShipping()">คำนวณยอดสุทธิ</button>
+
+        <div id="resultBox">
+            <p style="text-align: center; color: #999;">สรุปยอดชำระจะแสดงที่นี่</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateShipping() {
+            let goodsPrice = parseFloat(document.getElementById("goodsPrice").value);
+            
+            // ดัก Error เผื่อลืมกรอกข้อมูล
+            if (isNaN(goodsPrice) || goodsPrice < 0) {
+                alert("กรุณากรอกยอดราคาสินค้าให้ถูกต้องครับ");
+                return;
+            }
+
+            // ดึงค่าขนส่งจาก Dropdown
+            let shippingDropdown = document.getElementById("shippingMethod");
+            let shippingCost = parseFloat(shippingDropdown.value);
+            let shippingName = shippingDropdown.options[shippingDropdown.selectedIndex].text;
+            let note = "";
+
+            // ⚡ ตรรกะเงื่อนไขพิเศษ: ซื้อครบ 500 ส่งฟรี!
+            if (goodsPrice >= 500) {
+                shippingCost = 0;
+                note = `<span class="free-shipping">(ได้รับสิทธิ์ส่งฟรี!)</span>`;
+            }
+
+            let netTotal = goodsPrice + shippingCost;
+
+            // แสดงผล
+            document.getElementById("resultBox").innerHTML = `
+                <p>ราคาสินค้า: <strong>${goodsPrice.toLocaleString()} บาท</strong></p>
+                <p>ค่าจัดส่ง (${shippingName}): <strong>${shippingCost} บาท</strong> ${note}</p>
+                <hr>
+                <p style="font-size: 18px; color: #0f4c5f;"><strong>ยอดชำระรวมทั้งสิ้น: ${netTotal.toLocaleString()} บาท</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>

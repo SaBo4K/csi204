@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4.2b - ตะกร้าสินค้า</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 40px; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .cart-list { margin-bottom: 20px; background: #fafafa; border: 1px solid #ddd; padding: 15px; border-radius: 5px; }
+        .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ccc; font-size: 15px; }
+        .cart-item:last-child { border-bottom: none; }
+        .total-box { font-size: 18px; font-weight: bold; color: #e74c3c; text-align: right; padding-top: 10px; border-top: 2px solid #ccc; margin-top: 10px; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-back { background: #95a5a6; color: white; }
+        .btn-back:hover { background: #7f8c8d; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🛒 สรุปรายการสั่งซื้อ</h2>
+        
+        <div class="cart-list" id="cartDisplay">
+            </div>
+
+        <button class="btn-back" onclick="goBackAndClear()">เคลียร์ตะกร้าและกลับไปเลือกใหม่</button>
+    </div>
+
+    <script>
+        // ทำงานทันทีเมื่อหน้าเว็บโหลด
+        window.onload = function() {
+            // 1. ดึงข้อมูล JSON จาก sessionStorage กลับมา
+            let cartData = sessionStorage.getItem("myCart");
+            let cartDisplay = document.getElementById("cartDisplay");
+
+            // ดักจับกรณีไม่มีข้อมูลในตะกร้า
+            if (!cartData) {
+                cartDisplay.innerHTML = `<p style="text-align:center; color:#999;">ตะกร้าว่างเปล่า</p>`;
+                return;
+            }
+
+            // 2. แปลงข้อความ JSON กลับเป็น Array Object
+            let products = JSON.parse(cartData);
+            let htmlList = "";
+            let totalPrice = 0;
+
+            // 3. วนลูปเพื่อเอาชื่อและราคามาต่อเป็น HTML และบวกราคารวม
+            products.forEach(function(item) {
+                htmlList += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span>${item.price.toLocaleString()} ฿</span>
+                    </div>
+                `;
+                totalPrice += item.price;
+            });
+
+            // 4. เพิ่มส่วนสรุปยอดรวมไว้ล่างสุด
+            htmlList += `
+                <div class="total-box">
+                    ยอดชำระรวมสุทธิ: ${totalPrice.toLocaleString()} บาท
+                </div>
+            `;
+
+            // ยัด HTML กลับเข้าไปในหน้าเว็บ
+            cartDisplay.innerHTML = htmlList;
+        }
+
+        // ฟังก์ชันล้างตะกร้าและกลับไปหน้าเดิม
+        function goBackAndClear() {
+            sessionStorage.removeItem("myCart"); // ลบเฉพาะข้อมูลตะกร้า
+            window.location.href = "lab4_2a.html";
+        }
+    </script>
+</body>
+</html>

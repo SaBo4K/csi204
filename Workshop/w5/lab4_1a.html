@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4.1a - ฟอร์มเก็บข้อมูล (LocalStorage)</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 50px; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0f4c5f; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0b3745; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>กรอกข้อมูลส่วนตัวของคุณ</h2>
+        <form onsubmit="return saveAndRedirect()">
+            <div class="form-group">
+                <label>ชื่อ-นามสกุล:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label>อีเมล:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label>เบอร์โทรศัพท์:</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label>เลือกธีมสีหน้าเว็บ (Theme):</label>
+                <select id="theme">
+                    <option value="light">Light Theme (สว่าง/คลีน)</option>
+                    <option value="dark">Dark Theme (มืด/เท่)</option>
+                    <option value="blue">Blue Theme (สีน้ำเงินสบายตา)</option>
+                </select>
+            </div>
+            <button type="submit">บันทึกข้อมูลและไปหน้าถัดไป</button>
+        </form>
+    </div>
+
+    <script>
+        function saveAndRedirect() {
+            // 1. ดึงค่าจากฟอร์ม
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let phone = document.getElementById("phone").value;
+            let theme = document.getElementById("theme").value;
+
+            // 2. บันทึกลง localStorage แบบแยก Key
+            localStorage.setItem("myname", name);
+            localStorage.setItem("myemail", email);
+            localStorage.setItem("myphone", phone);
+            localStorage.setItem("mytheme", theme);
+
+            // 3. สั่งเปลี่ยนหน้าเว็บไปยังไฟล์ lab4_1b.html
+            window.location.href = "lab4_1b.html";
+            
+            // คืนค่า false เพื่อป้องกันไม่ให้ฟอร์มรีเฟรชตัวเอง
+            return false;
+        }
+    </script>
+</body>
+</html>

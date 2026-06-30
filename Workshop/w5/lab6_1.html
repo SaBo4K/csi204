@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 6.1 - ระบบแปลงหน่วย (Switch-Case)</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 30px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 450px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0f4c5f; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0b3745; }
+        #resultBox { margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 5px; text-align: center; font-size: 18px; font-weight: bold; color: #0f4c5f; border: 1px solid #bce0ee; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🔄 ระบบแปลงหน่วยอเนกประสงค์</h2>
+        
+        <div class="form-group">
+            <label>เลือกประเภทการแปลงหน่วย:</label>
+            <select id="convertType">
+                <option value="kgToLbs">กิโลกรัม (kg) ➔ ปอนด์ (lbs)</option>
+                <option value="cToF">เซลเซียส (°C) ➔ ฟาเรนไฮต์ (°F)</option>
+                <option value="kmToMi">กิโลเมตร (km) ➔ ไมล์ (mi)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>ระบุตัวเลขที่ต้องการแปลง:</label>
+            <input type="number" id="inputValue" placeholder="ระบุตัวเลข..." step="any">
+        </div>
+
+        <button onclick="convert()">คำนวณการแปลงค่า</button>
+
+        <div id="resultBox">
+            ผลลัพธ์จะแสดงที่นี่
+        </div>
+    </div>
+
+    <script>
+        function convert() {
+            let type = document.getElementById("convertType").value;
+            let value = parseFloat(document.getElementById("inputValue").value);
+            
+            // ดักจับกรณีผู้ใช้ไม่กรอกตัวเลข
+            if (isNaN(value)) {
+                alert("กรุณาระบุตัวเลขที่ต้องการแปลงค่าด้วยครับ");
+                return;
+            }
+
+            let result = 0;
+            let resultText = "";
+
+            // ⚡ ตรรกะ Switch-Case: เช็คว่า Dropdown ถูกเลือกเป็นอะไร
+            switch(type) {
+                case "kgToLbs":
+                    result = value * 2.20462;
+                    resultText = `${value} กิโลกรัม = ${result.toFixed(2)} ปอนด์`;
+                    break; // อย่าลืมใส่ break ไม่งั้นมันจะไหลไปรันเคสข้างล่างต่อ
+                
+                case "cToF":
+                    result = (value * 9/5) + 32;
+                    resultText = `${value} องศาเซลเซียส = ${result.toFixed(2)} องศาฟาเรนไฮต์`;
+                    break;
+                
+                case "kmToMi":
+                    result = value * 0.621371;
+                    resultText = `${value} กิโลเมตร = ${result.toFixed(2)} ไมล์`;
+                    break;
+                
+                default:
+                    resultText = "รูปแบบการแปลงไม่ถูกต้อง";
+            }
+
+            // แสดงผลลัพธ์
+            document.getElementById("resultBox").innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>

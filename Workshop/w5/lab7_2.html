@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 7.2 - ระบบ Import/Export ข้อมูล (JSON)</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 30px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        button, .file-upload-label { flex: 1; padding: 12px; border: none; border-radius: 5px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; }
+        .btn-export { background-color: #27ae60; color: white; }
+        .btn-export:hover { background-color: #219150; }
+        .file-upload-label { background-color: #f39c12; color: white; display: inline-block; }
+        .file-upload-label:hover { background-color: #d68910; }
+        input[type="file"] { display: none; }
+        #jsonOutput { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; font-size: 13px; max-height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>💽 ระบบสำรองข้อมูล (JSON Import / Export)</h2>
+        
+        <div class="btn-group">
+            <button class="btn-export" onclick="exportData()">⬇️ ดาวน์โหลด (Export JSON)</button>
+            <label class="file-upload-label">
+                ⬆️ อัปโหลด (Import JSON)
+                <input type="file" id="fileInput" accept=".json" onchange="importData(event)">
+            </label>
+        </div>
+
+        <p style="font-weight: bold; color: #555;">ตัวอย่างข้อมูลดิบ (JSON Format):</p>
+        <div id="jsonOutput">คลิกอัปโหลดไฟล์ JSON เพื่อแสดงข้อมูล...</div>
+    </div>
+
+    <script>
+        // ข้อมูลตัวอย่างสำหรับใช้ Export
+        const database = [
+            { id: 1, name: "Apple", category: "Fruit", price: 30 },
+            { id: 2, name: "Banana", category: "Fruit", price: 15 },
+            { id: 3, name: "Carrot", category: "Vegetable", price: 20 }
+        ];
+
+        // 1. ฟังก์ชัน Export ข้อมูล (Object -> JSON String)
+        function exportData() {
+            // แปลง Object เป็นข้อความ JSON (ใส่ null, 2 เพื่อให้จัดหน้าสวยงาม)
+            let jsonString = JSON.stringify(database, null, 2);
+            
+            // สร้าง Blob (จำลองไฟล์)
+            let blob = new Blob([jsonString], { type: "application/json" });
+            let url = URL.createObjectURL(blob);
+            
+            // สั่งเบราว์เซอร์ให้คลิกดาวน์โหลดอัตโนมัติ
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'my_data_backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // 2. ฟังก์ชัน Import ข้อมูล (JSON String -> Object)
+        function importData(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+
+            let reader = new FileReader();
+            
+            // เมื่ออ่านไฟล์เสร็จ ให้ทำสิ่งนี้
+            reader.onload = function(e) {
+                try {
+                    let rawJson = e.target.result;
+                    // แปลงข้อความ JSON กลับมาเป็น JavaScript Object
+                    let parsedData = JSON.parse(rawJson);
+                    
+                    // แสดงข้อความดิบให้เห็นในหน้าเว็บ
+                    document.getElementById("jsonOutput").innerText = JSON.stringify(parsedData, null, 2);
+                    
+                    // สาธิตการใช้ .reduce() และ .filter() กับข้อมูลที่เพิ่ง Import เข้ามาตามสเปกโจทย์
+                    let totalValue = parsedData.reduce((sum, item) => sum + item.price, 0);
+                    let fruitsOnly = parsedData.filter(item => item.category === "Fruit");
+                    
+                    alert(`✅ อัปโหลดสำเร็จ!\n\nสรุปข้อมูลที่อ่านได้:\n- สินค้าทั้งหมด: ${parsedData.length} รายการ\n- มูลค่ารวม: ${totalValue} บาท\n- เป็นผลไม้จำนวน: ${fruitsOnly.length} รายการ`);
+                } catch (error) {
+                    alert("รูปแบบไฟล์ JSON ไม่ถูกต้องครับ!");
+                }
+            };
+            
+            // สั่งเริ่มอ่านไฟล์
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>

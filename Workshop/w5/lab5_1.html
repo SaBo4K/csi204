@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5.1 - ระบบคำนวณราคาสินค้าและส่วนลด</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f6; padding: 30px; color: #333; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        h2 { color: #0f4c5f; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .product-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px dashed #ccc; align-items: center; }
+        .product-item label { cursor: pointer; flex-grow: 1; margin-left: 10px; font-size: 16px; }
+        button { width: 100%; padding: 12px; background: #0f4c5f; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        button:hover { background: #0b3745; }
+        #resultBox { margin-top: 20px; padding: 15px; background: #fafafa; border: 1px solid #ddd; border-radius: 5px; font-size: 15px; }
+        .discount-text { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🏷️ โปรโมชั่นพิเศษ: ยิ่งซื้อยิ่งลด!</h2>
+        <p style="text-align: center; color: #777; font-size: 14px;">> 500 บาท ลด 10% | > 1,000 บาท ลด 15%</p>
+        
+        <div id="productList"></div>
+
+        <button onclick="calculateTotal()">คำนวณราคาสุทธิ</button>
+
+        <div id="resultBox">
+            <p style="text-align: center; color: #999;">เลือกสินค้าแล้วกดคำนวณเพื่อดูส่วนลด</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. สร้าง Array Object เก็บข้อมูลสินค้าตามสเปกโจทย์
+        const products = [
+            { id: "p1", name: "คีย์บอร์ดไร้สาย", price: 650 },
+            { id: "p2", name: "เมาส์เกมมิ่ง", price: 450 },
+            { id: "p3", name: "แผ่นรองเมาส์ XL", price: 200 },
+            { id: "p4", name: "หูฟัง Bluetooth", price: 890 }
+        ];
+
+        // 2. ฟังก์ชันเรนเดอร์สินค้าออกมาเป็น Checkbox ตอนโหลดหน้าเว็บ
+        window.onload = function() {
+            let html = "";
+            products.forEach(item => {
+                html += `
+                    <div class="product-item">
+                        <input type="checkbox" id="${item.id}" class="item-checkbox" value="${item.price}">
+                        <label for="${item.id}">${item.name}</label>
+                        <span>${item.price} บาท</span>
+                    </div>
+                `;
+            });
+            document.getElementById("productList").innerHTML = html;
+        }
+
+        // 3. ฟังก์ชันคำนวณราคารวมและส่วนลด (Business Logic)
+        function calculateTotal() {
+            let checkboxes = document.querySelectorAll('.item-checkbox');
+            let total = 0;
+
+            // บวกราคาสินค้าที่ถูกติ๊ก
+            checkboxes.forEach(box => {
+                if (box.checked) {
+                    total += parseFloat(box.value);
+                }
+            });
+
+            if (total === 0) {
+                alert("กรุณาเลือกสินค้าอย่างน้อย 1 ชิ้นครับ");
+                return;
+            }
+
+            // ⚡ ตรรกะ If-Else If เช็คส่วนลด (เช็คตัวมากก่อนเสมอ)
+            let discountRate = 0;
+            if (total > 1000) {
+                discountRate = 0.15; // ลด 15%
+            } else if (total > 500) {
+                discountRate = 0.10; // ลด 10%
+            } else {
+                discountRate = 0;    // ไม่ลด
+            }
+
+            let discountAmount = total * discountRate;
+            let netTotal = total - discountAmount;
+
+            // แสดงผลลัพธ์
+            document.getElementById("resultBox").innerHTML = `
+                <p>ราคารวมของสินค้า: <strong>${total.toLocaleString()} บาท</strong></p>
+                <p class="discount-text">ส่วนลดที่ได้รับ (${discountRate * 100}%): -${discountAmount.toLocaleString()} บาท</p>
+                <hr>
+                <p style="font-size: 18px; color: #0f4c5f;"><strong>ยอดชำระสุทธิ: ${netTotal.toLocaleString()} บาท</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>
